@@ -1,8 +1,8 @@
 ## MMM-Launch
 
-Ever wonder just how often mankind is launching things into space?
-Once a year? Twice? Wrong! On a daily basis. Often, several times a day!
-Don't believe it? Neither did I. 
+* Ever wonder just how often mankind is launching things into space? Once a year? Twice?
+
+* Wrong! On a daily basis. Often, several times a day!Don't believe it? Neither did I. 
 
 ## How it works
 
@@ -16,7 +16,7 @@ each launch, pictures of the spacecraft and a full description of each mission.
 
 ![](pix/1.JPG), ![](pix/2.JPG),
 
-![](pix/3.JPG), ![](pix/4.JPG),
+![](pix/4.JPG), ![](pix/3.JPG),
 
 * Annotated .css file included for aligning and coloring text and image sizing.
 
@@ -42,4 +42,4 @@ each launch, pictures of the spacecraft and a full description of each mission.
         }
     },
 	
-## NFW! Do you believe me now?
+## NFW? Do you believe me now?
