@@ -6,7 +6,7 @@
 
 ## How it works
 
-Every 30 seconds MMM-Launch will tell you the upcoming dates, launch sites, 
+Every 30 seconds, MMM-Launch will tell you the upcoming dates, launch sites, 
 the spacecraft, who is launching, the missions, the agencies responsible for 
 each launch, pictures of the spacecraft and a full description of each mission.  
 
