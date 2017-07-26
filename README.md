@@ -2,7 +2,7 @@
 
 * Ever wonder just how often mankind is launching things into space? Once a year? Twice?
 
-* Wrong! On a daily basis. Often, several times a day! Don't believe it? Neither did I. 
+* **Wrong!** On a daily basis. Often, several times a day! Don't believe it? Neither did I. 
 
 ## How it works
 
