@@ -4,19 +4,22 @@
  * By Mykle1
  *
  */
+ 
 Module.register("MMM-Launch", {
 
     // Module config defaults.
     defaults: {
-    //    multipleChoice: "Yes", // No = no multiple choice answers appear
-        useHeader: true, // false if you don't want a header
-        header: "We have liftoff!", // Any text you want
+        showPix: "Yes",                 // No = no pictures display
+		showAgency: "Yes",              // No = Launch Agency not shown
+		showDescription: "No",          // Yes for full descriptive text under picture
+        useHeader: true,                // false if you don't want a header
+        header: "We have liftoff!",     // Any text you want
         maxWidth: "250px",
-        rotateInterval: 30 * 1000, // 20 secs to think then answer appears for 10 secs
-        animationSpeed: 3000, // fade in and out speed
-        initialLoadDelay: 4250,
+        rotateInterval: 30 * 1000,      // 30 seconds
+        animationSpeed: 3000,           // fade in and out speed
+        initialLoadDelay: 5250,
         retryDelay: 2500,
-        updateInterval: 25 * 60 * 1000, // API limits 50 questions per call 
+        updateInterval: 30 * 60 * 1000, // 60 lauches per call
 
     },
 
@@ -29,7 +32,7 @@ Module.register("MMM-Launch", {
 
         requiresVersion: "2.1.0",
 
-            // Set locale.
+        // Set locale.
         this.url = "https://launchlibrary.net/1.1/launch?next=60&mode=verbose";
         this.Launch = [];
         this.activeItem = 0;
@@ -44,7 +47,7 @@ Module.register("MMM-Launch", {
         wrapper.style.maxWidth = this.config.maxWidth;
 
         if (!this.loaded) {
-            wrapper.innerHTML = "T - Minus 10 seconds . . .";
+            wrapper.innerHTML = "T - Minus 5 seconds and counting";
             wrapper.classList.add("bright", "light", "small");
             return wrapper;
         }
@@ -57,7 +60,7 @@ Module.register("MMM-Launch", {
         }
 
 
-        var LaunchKeys = Object.keys(this.Launch);
+			var LaunchKeys = Object.keys(this.Launch);
         if (LaunchKeys.length > 0) {
             if (this.activeItem >= LaunchKeys.length) {
                 this.activeItem = 0;
@@ -65,29 +68,50 @@ Module.register("MMM-Launch", {
             var Launch = this.Launch[LaunchKeys[this.activeItem]];
 
 
-            var top = document.createElement("div");
-            top.classList.add("list-row");
+			var top = document.createElement("div");
+			top.classList.add("list-row");
+			
+			// spacecraft // mission type // date of launch // launch site
+			var spacecraft = document.createElement("div");
+			spacecraft.classList.add("xsmall", "bright", "spacecraft");
+			spacecraft.innerHTML = Launch.missions[0].name + " spacecraft for " + Launch.missions[0].typeName + " launches " + this.sTrim(Launch.net, 15, ' ', ' ') + " from " + Launch.location.name;
+			wrapper.appendChild(spacecraft);
+			
+			
+			var showPix = this.config.showPix
+			// picture of rocket type
+			var img = document.createElement("img");
+			img.classList.add("photo");
+			// change placeholder image
+		if (Launch.rocket.imageURL == "https://s3.amazonaws.com/launchlibrary/RocketImages/placeholder_1920.png") {
+			Launch.rocket.imageURL = "https://s3.amazonaws.com/launchlibrary/RocketImages/+Briz-KM_480.jpg";
+		}
+		    // config option for pictures
+		if (this.config.showPix == "Yes") {
+			img.src = Launch.rocket.imageURL; // Launch.rocket.imageURL;
+			wrapper.appendChild(img);
+		}
+		
+			var showDescription = this.config.showDescription
+			// description of mission	
+			var description = document.createElement("div");
+			description.classList.add("xsmall", "bright", "description");
+			// config option for description
+		if (this.config.showDescription == "Yes") {
+			description.innerHTML = Launch.missions[0].description;
+			wrapper.appendChild(description);
+		}
 
-
-        // picture of rocket type
-		var img = document.createElement("img");
-		img.classList.add("photo");
-		img.src = Launch[0].rocket.imageURL;
-		wrapper.appendChild(img);
-		
-		
-		// launch date and time
-        var launchDate = document.createElement("div");
-        launchDate.classList.add("small", "bright", "launchDate");
-        launchDate.innerHTML = "Launching " + Launch[0].net;
-        wrapper.appendChild(launchDate);
-		
-		
-		// launch site
-        var launchSite = document.createElement("div");
-        launchSite.classList.add("small", "bright", "launchSite");
-        launchSite.innerHTML = "Launch site " + Launch[0].location.name;
-        wrapper.appendChild(launchSite);
+			var showAgency = this.config.showAgency
+			// agencies
+			var agencies = document.createElement("div");
+			agencies.classList.add("xsmall", "bright", "agencies");
+			// config option for Agency
+		if (this.config.showAgency == "Yes") {
+			agencies.innerHTML = "Agency: " + Launch.rocket.agencies[0].name;
+			wrapper.appendChild(agencies);
+			}
+			
 		
         }
         return wrapper;
@@ -97,8 +121,17 @@ Module.register("MMM-Launch", {
     processLaunch: function(data) {
         this.today = data.Today;
         this.Launch = data;
-        console.log(this.Launch); // checking my data
+    //  console.log(this.Launch); // checking my data
         this.loaded = true;
+    },
+	
+	sTrim: function(str, length, delim, appendix) {
+        if (str.length <= length) return str;
+        var trimmedStr = str.substr(0, length + delim.length);
+        var lastDelimIndex = trimmedStr.lastIndexOf(delim);
+        if (lastDelimIndex >= 0) trimmedStr = trimmedStr.substr(0, lastDelimIndex);
+        if (trimmedStr) trimmedStr += appendix;
+        return trimmedStr;
     },
 
     scheduleCarousel: function() {

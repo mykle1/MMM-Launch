@@ -4,7 +4,27 @@
  * Pick your color, copy and paste the HEX number. Example - #62FF00 = bright green.
  */
  
- .MMM-Launch .header{
+.MMM-Launch .header {
   color: white;               /* Header color. Default is white. */
   text-align: left;           /* Align header text. (left, center, right) */
+}
+
+.MMM-Launch .spacecraft {
+  color: white;               /* Spacecraft color. Default is white. */
+  text-align: left;           /* Align Spacecraft text. (left, center, right) */
+}
+
+.MMM-Launch .photo {           
+  height: 300px;              /* Size photo */
+  width: 300px;               /* Size photo */
+}
+
+.MMM-Launch .agencies {
+  color: white;               /* Agency color. Default is white. */
+  text-align: left;           /* Align Agency text. (left, center, right) */
+}
+
+.MMM-Launch .description {
+  color: white;               /* description color. Default is white. */
+  text-align: left;           /* Align description text. (left, center, right) */
 }
