@@ -33,7 +33,7 @@ Module.register("MMM-Launch", {
         requiresVersion: "2.1.0",
 
         // Set locale.
-        this.url = "https://launchlibrary.net/1.1/launch?next=60&mode=verbose";
+        this.url = "https://launchlibrary.net/1.2/launch?next=60&mode=verbose";
         this.Launch = [];
         this.activeItem = 0;
         this.rotateInterval = null;
