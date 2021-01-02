@@ -3,7 +3,7 @@
  * Use any colors you want! Go to - "http://htmlcolorcodes.com/color-picker/"
  * Pick your color, copy and paste the HEX number. Example - #62FF00 = bright green.
  */
- 
+
 .MMM-Launch .header {
   color: white;               /* Header color. Default is white. */
   text-align: left;           /* Align header text. (left, center, right) */
@@ -14,7 +14,7 @@
   text-align: left;           /* Align Spacecraft text. (left, center, right) */
 }
 
-.MMM-Launch .photo {           
+.MMM-Launch .photo {
   height: 300px;              /* Size photo */
   width: 300px;               /* Size photo */
 }
@@ -27,4 +27,9 @@
 .MMM-Launch .description {
   color: white;               /* description color. Default is white. */
   text-align: left;           /* Align description text. (left, center, right) */
+}
+
+.MMM-Launch .launchRocket {
+  color: white;               /* launchRocket color. Default is white. */
+  text-align: right;           /* Align launchRocket text. (left, center, right) */
 }

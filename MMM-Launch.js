@@ -4,7 +4,7 @@
  * By Mykle1
  *
  */
- 
+
 Module.register("MMM-Launch", {
 
     // Module config defaults.
@@ -19,7 +19,7 @@ Module.register("MMM-Launch", {
         animationSpeed: 3000,           // fade in and out speed
         initialLoadDelay: 5250,
         retryDelay: 2500,
-        updateInterval: 30 * 60 * 1000, // 60 lauches per call
+        updateInterval: 60 * 60 * 1000,
 
     },
 
@@ -30,10 +30,10 @@ Module.register("MMM-Launch", {
     start: function() {
         Log.info("Starting module: " + this.name);
 
-        requiresVersion: "2.1.0",
-
         // Set locale.
-        this.url = "https://launchlibrary.net/1.2/launch?next=60&mode=verbose";
+        // this.url = "https://launchlibrary.net/1.2/launch?next=60&mode=verbose";
+        this.url = "https://ll.thespacedevs.com/2.0.0/launch/upcoming/?format=json&limit=50";
+
         this.Launch = [];
         this.activeItem = 0;
         this.rotateInterval = null;
@@ -70,35 +70,37 @@ Module.register("MMM-Launch", {
 
 			var top = document.createElement("div");
 			top.classList.add("list-row");
-			
+
+
+
 			// spacecraft // mission type // date of launch // launch site
 			var spacecraft = document.createElement("div");
 			spacecraft.classList.add("xsmall", "bright", "spacecraft");
-			spacecraft.innerHTML = Launch.missions[0].name + " spacecraft for " + Launch.missions[0].typeName + " launches " + this.sTrim(Launch.net, 15, ' ', ' ') + " from " + Launch.location.name;
+			spacecraft.innerHTML = Launch.mission.name + " spacecraft for " + Launch.mission.type + " launches " + this.sTrim(Launch.net, 15, ' ', ' ') + " from " + Launch.pad.location.name;
 			wrapper.appendChild(spacecraft);
-			
-			
+
+
 			var showPix = this.config.showPix
 			// picture of rocket type
 			var img = document.createElement("img");
 			img.classList.add("photo");
-			// change placeholder image
-		if (Launch.rocket.imageURL == "https://s3.amazonaws.com/launchlibrary/RocketImages/placeholder_1920.png") {
-			Launch.rocket.imageURL = "https://s3.amazonaws.com/launchlibrary/RocketImages/+Briz-KM_480.jpg";
-		}
+		// 	// change placeholder image
+		// if (Launch.rocket.imageURL == "https://s3.amazonaws.com/launchlibrary/RocketImages/placeholder_1920.png") {
+		// 	Launch.rocket.imageURL = "https://s3.amazonaws.com/launchlibrary/RocketImages/+Briz-KM_480.jpg";
+		// }
 		    // config option for pictures
 		if (this.config.showPix == "Yes") {
-			img.src = Launch.rocket.imageURL; // Launch.rocket.imageURL;
+			img.src = Launch.image;
 			wrapper.appendChild(img);
 		}
-		
+
 			var showDescription = this.config.showDescription
-			// description of mission	
+			// description of mission
 			var description = document.createElement("div");
 			description.classList.add("xsmall", "bright", "description");
 			// config option for description
 		if (this.config.showDescription == "Yes") {
-			description.innerHTML = Launch.missions[0].description;
+			description.innerHTML = Launch.mission.description;
 			wrapper.appendChild(description);
 		}
 
@@ -108,23 +110,31 @@ Module.register("MMM-Launch", {
 			agencies.classList.add("xsmall", "bright", "agencies");
 			// config option for Agency
 		if (this.config.showAgency == "Yes") {
-			agencies.innerHTML = "Agency: " + Launch.rocket.agencies[0].name;
+			agencies.innerHTML = "Agency: " + Launch.launch_service_provider.name;
 			wrapper.appendChild(agencies);
 			}
-			
-		
-        }
-        return wrapper;
+
+
+
+      var launchRocket = document.createElement("div");
+			launchRocket.classList.add("xsmall", "bright", "launchRocket");
+			launchRocket.innerHTML = "Launch Rocket: " + Launch.rocket.configuration.full_name;
+			wrapper.appendChild(launchRocket);
+
+      }
+
+      return wrapper;
+
     },
 
 
     processLaunch: function(data) {
         this.today = data.Today;
         this.Launch = data;
-    //  console.log(this.Launch); // checking my data
+     console.log(this.Launch); // checking my data
         this.loaded = true;
     },
-	
+
 	sTrim: function(str, length, delim, appendix) {
         if (str.length <= length) return str;
         var trimmedStr = str.substr(0, length + delim.length);

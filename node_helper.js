@@ -19,15 +19,15 @@ module.exports = NodeHelper.create({
         request({
             url: url,
             method: 'GET',
-			headers: {
-             'User-Agent': 'request'
-              }
+			// headers: {
+      //        'User-Agent': 'request'
+      //         }
         }, (error, response, body) => {
             if (!error && response.statusCode == 200) {
-                var result = JSON.parse(body).launches; // Parsing an array
-		//		console.log(response.statusCode + result); // checking data
+                var result = JSON.parse(body).results; // Parsing an array
+				// console.log(response.statusCode + result); // checking data
                     this.sendSocketNotification('LAUNCH_RESULT', result);
-		
+
             }
         });
     },
