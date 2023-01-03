@@ -18,6 +18,9 @@ each launch, pictures of the spacecraft and a full description of each mission.
 
 ![](pix/4.JPG), ![](pix/3.JPG),
 
+* Pictures with full description. 
+* https://imgur.com/a/LWS4f8T
+
 * Annotated .css file included for aligning and coloring text and image sizing.
 
 ## Installation
