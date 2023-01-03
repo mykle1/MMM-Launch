@@ -32,7 +32,7 @@ Module.register("MMM-Launch", {
 
         // Set locale.
         // this.url = "https://launchlibrary.net/1.2/launch?next=60&mode=verbose";
-        this.url = "https://ll.thespacedevs.com/2.0.0/launch/upcoming/?format=json&limit=50";
+        this.url = "https://ll.thespacedevs.com/2.0.0/launch/upcoming/?format=json&limit=25";
 
         this.Launch = [];
         this.activeItem = 0;
@@ -70,15 +70,17 @@ Module.register("MMM-Launch", {
 
 			var top = document.createElement("div");
 			top.classList.add("list-row");
-
-
-
+			var date = new Date(Launch.net);
+			var currentMonth=date.getMonth();
+			var currentDayOfWeek = date.getDay();
+			var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+			var daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+			date = (daysOfWeek[currentDayOfWeek] + ", " + months[currentMonth] + " " + date.getDate() + ", " + date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes() + ".");
 			// spacecraft // mission type // date of launch // launch site
 			var spacecraft = document.createElement("div");
 			spacecraft.classList.add("xsmall", "bright", "spacecraft");
-			spacecraft.innerHTML = Launch.mission.name + " spacecraft for " + Launch.mission.type + " launches " + this.sTrim(Launch.net, 15, ' ', ' ') + " from " + Launch.pad.location.name;
+			spacecraft.innerHTML = Launch.mission.name + "<br>" + "Launches NET " + date /*this.sTrim(Launch.net, 15, ' ', ' ')*/ + "<br>Pad: " + Launch.pad.name + " at " + Launch.pad.location.name;
 			wrapper.appendChild(spacecraft);
-
 
 			var showPix = this.config.showPix
 			// picture of rocket type
@@ -110,17 +112,16 @@ Module.register("MMM-Launch", {
 			agencies.classList.add("xsmall", "bright", "agencies");
 			// config option for Agency
 		if (this.config.showAgency == "Yes") {
-			agencies.innerHTML = "Agency: " + Launch.launch_service_provider.name;
+			agencies.innerHTML = "Launch Provider: " + Launch.launch_service_provider.name + "<br>Rocket: " + Launch.rocket.configuration.name;
 			wrapper.appendChild(agencies);
 			}
 
 
 
-      var launchRocket = document.createElement("div");
+/*      var launchRocket = document.createElement("div");
 			launchRocket.classList.add("xsmall", "bright", "launchRocket");
-			launchRocket.innerHTML = "Launch Rocket: " + Launch.rocket.configuration.full_name;
 			wrapper.appendChild(launchRocket);
-
+*/
       }
 
       return wrapper;
@@ -145,7 +146,7 @@ Module.register("MMM-Launch", {
     },
 
     scheduleCarousel: function() {
-        console.log("Carousel of Launch fucktion!");
+        console.log("Carousel of Launch function!");
         this.rotateInterval = setInterval(() => {
             this.activeItem++;
             this.updateDom(this.config.animationSpeed);
